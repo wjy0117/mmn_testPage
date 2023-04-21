@@ -1,0 +1,69 @@
+//reviewsortServlet.java
+String context = request.getContextPath();
+String review_SortText = request.getParameter("review_SortText");
+
+switch(review_SortText) {
+case "great":
+	
+	break;
+}
+response.sendRedirect(context + "/Store.jsp");
+
+
+
+//store.jsp
+<!-- 0421 -->
+<input id="review_SortText" name="review_SortText">
+<ul>
+<li><a href="javascript:sortAll">전체</a><span id="score_all"
+	class="show_score"> <!-- (12) --> <%=review_count_All%>
+</span></li>
+<li><a href="javascript:sortGreat">억수로 마싯다</a><span
+	id="score_great" class="show_score"> <!-- (12) --> <%=review_count_great%>
+</span></li>
+<li><a href="javascript:sortGood">갠찮드라</a><span
+	id="score_good" class="show_score"> <!-- (12) --> <%=review_count_good%>
+</span></li>
+<li><a href="javascript:sortBad">영 파이다</a>
+<span id="score_bad" class="show_score"> <!-- (12) --> <%=review_count_bad%>
+</span></li>
+</ul>
+
+<form  method="post" id="review_form2" action="reviewsort">
+//리뷰내용
+</form>
+
+//0421
+//리뷰 정렬 클릭마다 내용 변경.
+//전체 클릭시 최신순으로 5개 출력.
+function sortAll(){
+	document.getElementById("review_SortText").value = "all";
+	document.getElementById("review_form2").submit();
+}
+//억수로 마싯다 클릭시 평점 5인 리뷰 5개 출력.
+function sortGreat(){
+	document.getElementById("review_SortText").value = "great";
+	document.getElementById("review_form2").submit();
+}
+//갠찮드라 클릭시 평점 4인 리뷰 5개 출력.
+function sortGood(){
+	document.getElementById("review_SortText").value = "good";
+	document.getElementById("review_form2").submit();
+}
+//영 파이다 클릭시 평점 3인 리뷰 5개 출력.
+
+function sortBad(){
+	document.getElementById("review_SortText").value = "bad";
+	document.getElementById("review_form2").submit();
+}
+
+
+//DB_Conn.java 
+get_review_count_All 메소드
+sql문 select count(*)as count from mmn.reviewtbl 로 변경.
+
+get_tagCount 메소드
+sql문 SELECT tagtbl.* FROM mmn.tagtbl where tagID = (select tag_storetbl.tagID from mmn.tag_storetbl where storeCode = "+storeCode+") 로 변경.
+
+//reviewServlet.java
+null입력 처
